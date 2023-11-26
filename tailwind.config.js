@@ -1,9 +1,17 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+module.exports = {
+	darkMode: "class",
+	content: [
+		"./index.html",
+		"./src/**/*.{js,ts,jsx,tsx}",
+		"node_modules/preline/dist/*.js",
+	],
+	plugins: [require("preline/plugin")],
 	theme: {
-		extend: {},
+		extend: {
+			fontFamily: {
+				poppins: "Poppins, sans-serif",
+			},
+		},
 	},
-	plugins: [],
 };
-
