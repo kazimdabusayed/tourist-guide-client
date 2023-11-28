@@ -27,7 +27,6 @@ const Login = () => {
 
 		logIn(email, password)
 			.then((result) => {
-				console.log(result);
 				toast({
 					title: "Logged in successfully",
 					status: "success",

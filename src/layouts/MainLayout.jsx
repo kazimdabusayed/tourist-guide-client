@@ -5,7 +5,7 @@ import Nav from '../shared/Navber/Nav';
 
 const MainLayout = () => {
    return (
-      <div className='max-w-7xl mx-auto '>
+      <div className='max-w-7xl mx-auto'>
          <Nav/>
          <Outlet />
          <Footer/>

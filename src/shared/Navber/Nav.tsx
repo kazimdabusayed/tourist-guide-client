@@ -131,7 +131,7 @@ export default function WithSubnavigation() {
                 <Avatar
                   size={"sm"}
                   src={
-                    "https://avatars.dicebear.com/api/male/username.svg"
+                    user?.photoURL ? user.photoURL : "https://avatars.dicebear.com/api/male/username.svg"
                   }
                 />
               </MenuButton>
@@ -141,7 +141,7 @@ export default function WithSubnavigation() {
                   <Avatar
                     size={"2xl"}
                     src={
-                      "https://avatars.dicebear.com/api/male/username.svg"
+                      user?.photoURL ? user.photoURL : "https://avatars.dicebear.com/api/male/username.svg"
                     }
                   />
                 </Center>
