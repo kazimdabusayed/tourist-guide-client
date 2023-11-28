@@ -56,6 +56,9 @@ dependencies:
   sort-by:
     specifier: ^1.2.0
     version: 1.2.0
+  sweetalert2:
+    specifier: ^11.10.1
+    version: 11.10.1
   tailwind-merge:
     specifier: ^2.0.0
     version: 2.0.0
@@ -4799,6 +4802,10 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /sweetalert2@11.10.1:
+    resolution: {integrity: sha512-qu145oBuFfjYr5yZW9OSdG6YmRxDf8CnkgT/sXMfrXGe+asFy2imC2vlaLQ/L/naZ/JZna1MPAY56G4qYM0VUQ==}
+    dev: false
 
   /tailwind-merge@2.0.0:
     resolution: {integrity: sha512-WO8qghn9yhsldLSg80au+3/gY9E4hFxIvQ3qOmlpXnqpDKoMruKfi/56BbbMg6fHTQJ9QD3cc79PoWqlaQE4rw==}

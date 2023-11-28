@@ -1,18 +1,12 @@
 
 import {
-	Box,
-	Flex,
 	Avatar,
-	Text,
 	Button,
 	Menu,
 	MenuButton,
 	MenuList,
 	MenuItem,
 	MenuDivider,
-	useDisclosure,
-	useColorModeValue,
-	Stack,
 	useColorMode,
 	Center,
 } from "@chakra-ui/react";
@@ -21,10 +15,10 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import { NavLink } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function Navber() {
 	const { colorMode, toggleColorMode } = useColorMode();
-	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { user, logOut } = useContext(AuthContext);
 
 	const handleLogOut = () => {
@@ -182,56 +176,13 @@ export default function Navber() {
 							>
 								All Services
 							</NavLink>
-							{ user && <Flex alignItems={"center"}>
-								<Stack direction={"row"} spacing={7}>
-									<Button onClick={toggleColorMode}>
-										{colorMode === "light" ? (
-											<MoonIcon />
-										) : (
-											<SunIcon />
-										)}
-									</Button>
-
-									<Menu>
-										<MenuButton
-											as={Button}
-											rounded={"full"}
-											variant={"link"}
-											cursor={"pointer"}
-											minW={0}
-										>
-											<Avatar
-												size={"sm"}
-												src={
-													"https://avatars.dicebear.com/api/male/username.svg"
-												}
-											/>
-										</MenuButton>
-										<MenuList alignItems={"center"}>
-											<br />
-											<Center>
-												<Avatar
-													size={"2xl"}
-													src={
-														"https://avatars.dicebear.com/api/male/username.svg"
-													}
-												/>
-											</Center>
-											<br />
-											<Center>
-												<p>Username</p>
-											</Center>
-											<br />
-											<MenuDivider />
-											<MenuItem>Your Servers</MenuItem>
-											<MenuItem>
-												Account Settings
-											</MenuItem>
-											<MenuItem>Logout</MenuItem>
-										</MenuList>
-									</Menu>
-								</Stack>
-							</Flex>}
+							<Button onClick={toggleColorMode}>
+								{colorMode === "light" ? (
+									<MoonIcon />
+								) : (
+									<SunIcon />
+								)}
+							</Button>
 							{user && (
 								<div className="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none] sm:[--trigger:hover] sm:py-4">
 									<button
@@ -280,74 +231,44 @@ export default function Navber() {
 							)}
 
 							{user ? (
-								// <div className="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none]  sm:py-4">
-
-								// 	<div className="hs-dropdown-menu transition-[opacity,margin] duration-[0.1ms] sm:duration-[150ms] hs-dropdown-open:opacity-100 opacity-0 sm:w-48 hidden z-10 bg-white sm:shadow-md rounded-lg p-2 dark:bg-gray-800 sm:dark:border dark:border-gray-700 dark:divide-gray-700 before:absolute top-full sm:border before:-top-5 before:left-0 before:w-full before:h-5">
-								// //
-								// 	</div>
-								// </div>
-								<div className="hs-dropdown relative inline-flex  sm:py-4 px-2">
-									<button
-										id="hs-dropdown-custom-trigger"
-										type="button"
-										className="hs-dropdown-toggle py-1 ps-1 pe-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-full border border-gray-200 text-gray-800 shadow-sm hover:bg-violet-600 disabled:opacity-50 disabled:pointer-events-none bg-violet-600/60 dark:border-gray-700 dark:text-white  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-									>
-										<img
-											src={
-												user?.photoURL
-													? user.photoURL
-													: "https://web.programming-hero.com/static/media/profileImage.934e5b10.png"
-											}
-											alt="avater"
-											className="w-8 h-auto rounded-full"
-										/>
-										<span className="text-gray-600 font-medium truncate max-w-[7.5rem] dark:text-gray-400">
-											{user?.displayName}
-										</span>
-										<svg
-											className="hs-dropdown-open:rotate-180 w-4 h-4"
-											xmlns="http://www.w3.org/2000/svg"
-											width="24"
-											height="24"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											strokeWidth="2"
-											strokeLinecap="round"
-											strokeLinejoin="round"
+								<Menu>
+										<MenuButton
+											as={Button}
+											rounded={"full"}
+											variant={"link"}
+											cursor={"pointer"}
+											minW={0}
 										>
-											<path d="m6 9 6 6 6-6" />
-										</svg>
-									</button>
-
-									<div
-										className="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-[15rem] bg-white shadow-md rounded-lg p-2 mt-2 dark:bg-gray-800 dark:border dark:border-gray-700"
-										aria-labelledby="hs-dropdown-custom-trigger"
-									>
-										<div className="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700">
-											<p className="text-sm text-gray-500 dark:text-gray-400">
-												Logged in as
-											</p>
-											<p className="text-sm font-medium text-gray-800 dark:text-gray-300">
-												{user?.email}
-											</p>
-										</div>
-										<div className="mt-2 py-2 first:pt-0 last:pb-0">
-											<Link
-												className="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-												to="/"
-											>
-												Profile
-											</Link>
-											<p
-												onClick={handleLogOut}
-												className="flex items-center gap-x-3.5 py-2 px-3 rounded-lg cursor-pointer text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300 dark:focus:bg-gray-700"
-											>
-												Log Out
-											</p>
-										</div>
-									</div>
-								</div>
+											<Avatar
+												size={"sm"}
+												src={user.photo? user.photo :
+													"https://avatars.dicebear.com/api/male/username.svg"
+												}
+											/>
+										</MenuButton>
+										<MenuList alignItems={"center"}>
+											<br />
+											<Center>
+												<Avatar
+													size={"2xl"}
+													src={
+														"https://avatars.dicebear.com/api/male/username.svg"
+													}
+												/>
+											</Center>
+											<br />
+											<Center>
+												<p>Username</p>
+											</Center>
+											<br />
+											<MenuDivider />
+											<MenuItem>Your Servers</MenuItem>
+											<MenuItem>
+												Account Settings
+											</MenuItem>
+											<MenuItem onClick={handleLogOut}>Logout</MenuItem>
+										</MenuList>
+									</Menu>
 							) : (
 								<Link
 									className="flex items-center gap-x-2 font-medium text-white/[.8] hover:text-white sm:border-l sm:border-white/[.3] sm:my-6 sm:pl-4"

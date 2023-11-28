@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import Footer from '../shared/Footer/Footer';
-import Navber from '../shared/Navber/Navber';
+// import Navber from '../shared/Navber/Navber';
+import Nav from '../shared/Navber/Nav';
 
 const MainLayout = () => {
    return (
-      <div className=' mx-auto '>
-         <Navber/>
+      <div className='max-w-7xl mx-auto '>
+         <Nav/>
          <Outlet />
          <Footer/>
       </div>

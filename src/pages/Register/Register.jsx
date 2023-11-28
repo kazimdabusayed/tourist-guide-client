@@ -1,16 +1,17 @@
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { InputRightElement, Button, InputGroup, useToast } from "@chakra-ui/react";
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const { createUser, logOut } = useContext(AuthContext);
+	const toast = useToast();
+	const navigate = useNavigate();
 
 	const handleSignUp = (e) => {
 		e.preventDefault();
@@ -19,30 +20,7 @@ const Register = () => {
 		const photo = form.get("photo");
 		const email = form.get("email");
 		const password = form.get("password");
-		console.log(name);
 
-		// reset error and success
-		// setSignupError("");
-		// setSuccess("");
-
-		// if (password !== confirmPassword) {
-		// 	setSignupError("Password don't match.");
-		// 	return;
-		// } else if (password.length < 6) {
-		// 	console.log(password.length);
-		// 	setSignupError("Password must be at least 6 characters long.");
-		// 	return;
-		// } else if (!/[A-Z]/.test(password)) {
-		// 	setSignupError(
-		// 		"Password must contain at least one capital letter."
-		// 	);
-		// 	return;
-		// } else if (!/[!@#$%^&*]/.test(password)) {
-		// 	setSignupError(
-		// 		"Password must contain at least one special character."
-		// 	);
-		// 	return;
-		// }
 
 		createUser(email, password)
 			.then((result) => {
@@ -54,24 +32,27 @@ const Register = () => {
 					displayName: name,
 					photoURL: photo,
 				});
-				// axios
-				// 	.post(
-				// 		"https://offline-service-sharing-server.vercel.app/api/v1/users",
-				// 		{
-				// 			name,
-				// 			email,
-				// 			photo,
-				// 			createdAt: createdAt,
-				// 		}
-				// 	)
-				// 	.then((res) => {
-				// 		console.log(res);
-				// 		if (res.data.insertedId) {
-				// 			toast.success("Please Login");
-				// 		}
-				// 		logOut();
-				// 		Navigate("/login");
-				// 	});
+				axios
+					.post("http://localhost:3000/api/users", {
+						name,
+						email,
+						photo,
+						createdAt: createdAt,
+					})
+					.then((res) => {
+						console.log(res);
+						if (res.data.insertedId) {
+							toast({
+								title: "Please Login",
+								status: "info",
+                        duration: 1200,
+								position: "top-right",
+								isClosable: true,
+							});
+						}
+						logOut();
+						navigate("/login");
+					});
 			})
 			.catch((error) => console.error(error));
 	};
@@ -223,14 +204,35 @@ const Register = () => {
 									Password
 								</label>
 
-								<input
-									type="password"
-									name="password"
-									id="password"
-									required
-									placeholder="*****"
-									className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
-								/>
+								<InputGroup>
+									<input
+										type={
+											showPassword ? "text" : "password"
+										}
+										name="password"
+										id="password"
+										required
+										placeholder="*****"
+										className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+									/>
+									<InputRightElement h={"full"}>
+										<Button
+											variant={"ghost"}
+											onClick={() =>
+												setShowPassword(
+													(showPassword) =>
+														!showPassword
+												)
+											}
+										>
+											{showPassword ? (
+												<ViewIcon />
+											) : (
+												<ViewOffIcon />
+											)}
+										</Button>
+									</InputRightElement>
+								</InputGroup>
 							</div>
 
 							<div className="col-span-6">
