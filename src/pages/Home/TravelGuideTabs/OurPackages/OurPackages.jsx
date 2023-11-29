@@ -6,7 +6,7 @@ const OurPackages = () => {
    return (
 		<div>
 			<div className="flex justify-center mt-6">
-				<Link to={"/allpackages"}>
+				<Link to={"/packages"}>
 					<Button
 						rightIcon={<ArrowForwardIcon />}
 						colorScheme="orange"

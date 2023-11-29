@@ -18,7 +18,7 @@ const TravelGuideTabs = () => {
 				variant="enclosed-colored"
 				colorScheme="pink"
 			>
-				<TabList>
+				<TabList className="px-4">
 					<Tab>Overview</Tab>
 					<Tab>Our Packages</Tab>
 					<Tab>Meet Our Tour Guide</Tab>

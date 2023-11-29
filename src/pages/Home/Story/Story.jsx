@@ -173,7 +173,7 @@ export default function Story() {
 			</Box>
 			<SimpleGrid
 				columns={{ base: 1, lg: 2 }}
-				spacing={"20"}
+				spacing={"16"}
 				mt={16}
 				mb={16}
 				mx={{base: 4, md: 12}}
