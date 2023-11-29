@@ -1,14 +1,14 @@
 import Banner from "../Banner/Banner";
 import Story from "../Story/Story";
 import TourType from "../TourType/TourType";
-import TraverlGuideTabs from "../TraverlGuideTabs/TraverlGuideTabs";
+import TravelGuideTabs from "../TravelGuideTabs/TravelGuideTabs";
 
 
 const Home = () => {
    return (
       <div>
          <Banner />
-         <TraverlGuideTabs/>
+         <TravelGuideTabs/>
          <TourType />
          <Story/>
       </div>
