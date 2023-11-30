@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   IconButton,
   Avatar,
@@ -33,6 +34,7 @@ import {
 import { IconType } from 'react-icons'
 import useAuth from '../hooks/useAuth'
 import Profile from '../pages/DashBoard/Profile/Profile'
+import { useState } from 'react'
 
 
 
@@ -45,9 +47,10 @@ interface LinkItemProps {
 }
 
 interface NavItemProps extends FlexProps {
-  icon: IconType
-  href: string
-  children: React.ReactNode
+  icon: IconType;
+  href: string;
+  children: React.ReactNode;
+  updateSelectedComponent: (component: React.ReactNode) => void;
 }
 
 interface MobileProps extends FlexProps {
@@ -55,7 +58,8 @@ interface MobileProps extends FlexProps {
 }
 
 interface SidebarProps extends BoxProps {
-  onClose: () => void
+  onClose: () => void;
+  updateSelectedComponent: (component: React.ReactNode) => void;
 }
 
 const LinkItems: Array<LinkItemProps> = [
@@ -66,7 +70,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: 'Settings', icon: FiSettings, href: '/settings' },
 ]
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, updateSelectedComponent,...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
@@ -84,7 +88,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} href={link.href ?? "/"}>
+        <NavItem key={link.name} icon={link.icon} href={link.href} updateSelectedComponent={updateSelectedComponent}>
           {link.name}
         </NavItem>
       ))}
@@ -92,13 +96,19 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   )
 }
 
-const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, href, children, updateSelectedComponent, ...rest }: NavItemProps) => {
+  const handleClick = (event) => {
+    event.preventDefault(); // Prevent the default behavior
+    updateSelectedComponent(children);
+  };
   return (
     <Box
       as="a"
       href={href}
       style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}>
+      _focus={{ boxShadow: 'none' }}
+      onClick={handleClick}
+    >
       <Flex
         align="center"
         p="4"
@@ -202,10 +212,15 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 }
 
 const DashBoard = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedComponent, setSelectedComponent] = useState(null);
+  const updateSelectedComponent = (component) => {
+    setSelectedComponent(component);
+  };
+
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
-      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+      <SidebarContent onClose={() => onClose} updateSelectedComponent={updateSelectedComponent} display={{ base: 'none', md: 'block' }} />
       <Drawer
         isOpen={isOpen}
         placement="left"
@@ -214,12 +229,13 @@ const DashBoard = () => {
         onOverlayClick={onClose}
         size="full">
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent onClose={onClose} updateSelectedComponent={updateSelectedComponent} />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
+        {selectedComponent === 'Profile' && <Profile />}
         {/* Content */}
       </Box>
     </Box>
