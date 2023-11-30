@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../provider/AuthProvider";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -11,9 +9,11 @@ import {
 	InputGroup,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 
 const Login = () => {
-	const { logIn, googleLogIn } = useContext(AuthContext);
+	const { logIn, googleLogIn } = useAuth();
 	const [showPassword, setShowPassword] = useState(false);
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -43,12 +43,31 @@ const Login = () => {
 
 	const handleGoogleLogin = async (e) => {
 		e.preventDefault();
-		try {
-			await googleLogIn();
-			navigate(location?.state ? location.state : "/");
-		} catch (err) {
-			console.log(err.message);
-		}
+		await googleLogIn()
+			.then((result) => {
+				const createdAt = result.user.metadata?.creationTime;
+				console.log(result.user);
+				const userInfo = {
+					name: result.user?.displayName,
+					email: result.user?.email,
+					photo: result.user?.photoURL,
+					createdAt: createdAt,
+				}
+				axios.post("http://localhost:3000/api/users", userInfo)
+					.then((res) => {
+						console.log(res.data);
+						if (res.data.insertedId) {
+							toast({
+								title: "user added successfully",
+								status: "info",
+								duration: 1200,
+								position: "top-right",
+								isClosable: true,
+							});
+						}
+						navigate(location?.state ? location.state : "/");
+					})
+			})
 	};
 
 	return (

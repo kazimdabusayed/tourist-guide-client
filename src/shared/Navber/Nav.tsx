@@ -31,15 +31,14 @@ import {
   ChevronRightIcon,
   MoonIcon,
   SunIcon,
-} from '@chakra-ui/icons'
-import { AuthContext } from '../../provider/AuthProvider';
-import { useContext } from 'react';
+} from '@chakra-ui/icons';
 import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode();
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
 
   const handleLogOut = () => {
     Swal.fire({

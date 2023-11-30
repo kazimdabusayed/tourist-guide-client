@@ -12,14 +12,13 @@ import {
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { AuthContext } from "../../provider/AuthProvider";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 export default function Navber() {
 	const { colorMode, toggleColorMode } = useColorMode();
-	const { user, logOut } = useContext(AuthContext);
+	const { user, logOut } = useAuth();
 
 	const handleLogOut = () => {
 		Swal.fire({

@@ -1,15 +1,14 @@
-
-import { useState, useContext } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { AuthContext } from "../../provider/AuthProvider";
 import { useNavigate, Link } from "react-router-dom";
 import { updateProfile } from "firebase/auth";
 import axios from "axios";
 import { InputRightElement, Button, InputGroup, useToast } from "@chakra-ui/react";
+import useAuth from "../../hooks/useAuth";
+import { useState } from "react";
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const { createUser, logOut } = useContext(AuthContext);
+	const { createUser, logOut } = useAuth();
 	const toast = useToast();
 	const navigate = useNavigate();
 
