@@ -1,4 +1,5 @@
 # Tour Guide Website
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Welcome to our Tour Guide Website! This platform connects tourists with guides and provides an admin dashboard for managing the system.
 
@@ -38,4 +39,3 @@ Check out the live demo of the Tour Guide Website: [Live Demo](https://tourist-g
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
