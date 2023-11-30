@@ -42,7 +42,7 @@ const Register = () => {
 						console.log(res);
 						if (res.data.insertedId) {
 							toast({
-								title: "Please Login",
+								title: "Please Sign in",
 								status: "info",
                         duration: 1200,
 								position: "top-right",
@@ -50,7 +50,7 @@ const Register = () => {
 							});
 						}
 						logOut();
-						navigate("/login");
+						navigate("/signin");
 					});
 			})
 			.catch((error) => console.error(error));
@@ -263,10 +263,10 @@ const Register = () => {
 									Already have an account?{" "}
 									<Link
 										rel="noopener noreferrer"
-										to="/login"
+										to="/signin"
 										className="hover:underline dark:text-violet-400"
 									>
-										Log in
+										Sign In
 									</Link>
 								</p>
 							</div>

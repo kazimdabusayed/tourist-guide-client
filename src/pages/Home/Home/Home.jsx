@@ -1,3 +1,4 @@
+import Package from "../../AllPackages/Package/Package";
 import Banner from "../Banner/Banner";
 import Story from "../Story/Story";
 import TourType from "../TourType/TourType";
@@ -10,7 +11,8 @@ const Home = () => {
          <Banner />
          <TravelGuideTabs/>
          <TourType />
-         <Story/>
+         <Story />
+         <Package/>
       </div>
    );
 };

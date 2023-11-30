@@ -34,6 +34,7 @@ import {
 } from '@chakra-ui/icons';
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
+import { NavLink } from 'react-router-dom';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
@@ -152,7 +153,7 @@ export default function WithSubnavigation() {
                   <p>{user?.email}</p>
                 </Center>
                 <MenuDivider />
-                <MenuItem>Dashboard</MenuItem>
+                <MenuItem><NavLink to={'/dashboard'}>Dashboard</NavLink></MenuItem>
                 <MenuItem>
                   Offer Announcements
                 </MenuItem>
