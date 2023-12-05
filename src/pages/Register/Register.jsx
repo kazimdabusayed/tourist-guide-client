@@ -5,12 +5,17 @@ import axios from "axios";
 import { InputRightElement, Button, InputGroup, useToast } from "@chakra-ui/react";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
-	const { createUser, logOut } = useAuth();
+	const { user, createUser, logOut } = useAuth();
 	const toast = useToast();
 	const navigate = useNavigate();
+
+	if (user) {
+		navigate("/");
+	}
 
 	const handleSignUp = (e) => {
 		e.preventDefault();
@@ -57,7 +62,7 @@ const Register = () => {
 	};
 
 	return (
-		<section className="bg-white dark:bg-gray-900 dark:text-gray-100">
+		<section className=" ">
 			<div className="lg:grid lg:min-h-screen lg:grid-cols-12">
 				<section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
 					<img
@@ -99,7 +104,7 @@ const Register = () => {
 					</div>
 				</section>
 
-				<main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+				<section className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-10 xl:col-span-6">
 					<div className="max-w-xl lg:max-w-3xl">
 						<div className="relative -mt-16 block lg:hidden">
 							<a
@@ -137,7 +142,7 @@ const Register = () => {
 								matters.
 							</p>
 						</div>
-
+						<SocialLogin />
 						<form
 							onSubmit={handleSignUp}
 							className="mt-8 grid grid-cols-6 gap-6"
@@ -156,7 +161,7 @@ const Register = () => {
 									name="name"
 									placeholder="jenkins"
 									required
-									className="w-full px-3 py-2 border rounded-md dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+									className="w-full px-3 py-2 border rounded-md"
 								/>
 							</div>
 
@@ -266,13 +271,13 @@ const Register = () => {
 										to="/signin"
 										className="hover:underline dark:text-violet-400"
 									>
-										Sign In
+										SignIn
 									</Link>
 								</p>
 							</div>
 						</form>
 					</div>
-				</main>
+				</section>
 			</div>
 		</section>
 	);

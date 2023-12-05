@@ -11,14 +11,15 @@ import {
 	signOut,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import useAxiosOpen from "../hooks/useAxiosOpen";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-	
 	const [user, steUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const axiosOpen = useAxiosOpen();
 
 	const createUser = (email, password) => {
 		setLoading(true);
@@ -43,13 +44,25 @@ const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
 			steUser(currentUser);
+			if (currentUser) {
+				//get token
+				const userInfo = { email: currentUser.email };
+				axiosOpen.post("/jwt", userInfo).then((res) => {
+					if (res.data.token) {
+						localStorage.setItem("access_token", res.data.token);
+					}
+				});
+			} else {
+				//remove token
+				localStorage.removeItem("access_token");
+			}
 			console.log("current user", currentUser);
 			setLoading(false);
 		});
 		return () => {
 			return unsubscribe();
 		};
-	}, []);
+	}, [axiosOpen]);
 
 	const authInfo = {
 		user,
@@ -60,11 +73,9 @@ const AuthProvider = ({ children }) => {
 		logOut,
 	};
 
-   return (
-      <AuthContext.Provider value={authInfo}>
-         {children}
-      </AuthContext.Provider>
-   );
+	return (
+		<AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+	);
 };
 
 export default AuthProvider;

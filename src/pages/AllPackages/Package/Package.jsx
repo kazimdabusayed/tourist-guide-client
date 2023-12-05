@@ -17,80 +17,100 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useWishlist from "../../../hooks/useWishlist";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
-const Package = () => {
+const Package = ({ onePackage }) => {
+	const { _id, name, tour_type, price, images } = onePackage;
 	const [liked, setLiked] = useState(false);
+	
 	const { user } = useAuth();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const axiosSecure = useAxiosSecure();
 	const toast = useToast();
-	const [, refetch] = useWishlist();
+	const [wishlist, refetch] = useWishlist();
 
-	// const handleAddToWishlist = (package) => {
-	// 	if (user && user.email) {
-	// 		const wishItem = {
-	// 			wishId: _id,
-	// 			email: user.email,
-	// 			name,
-	// 			image,
-	// 			price,
-	// 		};
-	// 		axiosSecure.post("/wishlists", wishItem).then((res) => {
-	// 			if (res.data.insetedId) {
-	// 				toast({
-	// 					title: "Added to wish list",
-	// 					status: "success",
-	// 					duration: 1200,
-	// 					position: "top-right",
-	// 					isClosable: true,
-	// 				});
-	// 			}
-	// 			//refetch
-	// 			refetch();
-	// 		});
-	// 	} else {
-	// 		Swal.fire({
-	// 			title: "You are not logged in!",
-	// 			text: "You won't be able to revert this!",
-	// 			icon: "warning",
-	// 			showCancelButton: true,
-	// 			confirmButtonColor: "#3085d6",
-	// 			cancelButtonColor: "#d33",
-	// 			confirmButtonText: "Yes, sign in!",
-	// 		}).then((result) => {
-	// 			if (result.isConfirmed) {
-	// 				navigate("/signin", { state: { from: location } });
-	// 			}
-	// 		});
-	// 	}
-	// };
+	// console.log(wishlist);
+
+	const handleAddToWishlist = () => {
+		if (user?.email) {
+			const wishItem = {
+				wishId: _id,
+				email: user.email,
+				name,
+				images,
+				price,
+			};
+			axiosSecure.post("/wishlists", wishItem).then((res) => {
+				if (res.data.insertedId) {
+					toast({
+						title: "Added to wish list",
+						status: "success",
+						duration: 1200,
+						position: "top-right",
+						isClosable: true,
+					});
+					if (!liked) {
+						setLiked(true); // only set to true if it was previously removed
+					}
+				}
+				//refetch
+				// refetch();
+			});
+		} else {
+			Swal.fire({
+				title: "You are not logged in!",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes, sign in!",
+			}).then((result) => {
+				if (result.isConfirmed) {
+					navigate("/signin", { state: { from: location } });
+				}
+			});
+		}
+	};
+
 	return (
-		<Center py={6}>
+		<Center py={6} className="">
 			<Box
-				w="xs"
-				rounded={"sm"}
+				w="lg"
+				rounded={"lg"}
 				my={5}
 				mx={[0, 5]}
 				overflow={"hidden"}
 				bg="white"
-				border={"1px"}
-				borderColor="black"
+				// border={"1px"}
+				// borderColor="purple"
 				boxShadow={useColorModeValue(
-					"6px 6px 0 black",
-					"6px 6px 0 cyan"
+					"2px 2px 0 black",
+					"2px 2px 0 pink"
 				)}
+				className="bg-white dark:bg-gray-800 dark:text-gray-100 transition-all duration-300 hover:scale-104 hover:shadow-md hover:shadow-purple-400"
 			>
-				<Box h={"200px"} borderBottom={"1px"} borderColor="black">
+				<Box
+					h={"300px"}
+					borderBottom={"1px"}
+					borderColor="black"
+					className="overflow-hidden"
+				>
+					{/* <Carousel>
+						{images.map((image) => (
+							<img key={image.key} src={image} alt="" />
+						))}
+					</Carousel> */}
 					<Img
-						src={
-							"https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-						}
+						src={images[0]}
+						className="hover:scale-105 delay-200 duration-300 ease-in-out"
 						roundedTop={"sm"}
 						objectFit="cover"
 						h="full"
 						w="full"
-						alt={"Blog Image"}
+						alt={"Image"}
 					/>
 				</Box>
 				<Box p={4}>
@@ -103,31 +123,30 @@ const Package = () => {
 						mb={2}
 					>
 						<Text fontSize={"xs"} fontWeight="medium">
-							React
+							{tour_type}
 						</Text>
 					</Box>
 					<Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
-						React v18.0
+						{name}
 					</Heading>
 					<Text color={"gray.500"} noOfLines={2}>
-						In this post, we will give an overview of what is new in
-						React 18, and what it means for the future.
+						{/* <details></details> */}
 					</Text>
 				</Box>
-				<HStack borderTop={"1px"} color="black">
-					<Flex
-						p={4}
-						alignItems="center"
-						justifyContent={"space-between"}
-						roundedBottom={"sm"}
-						cursor={"pointer"}
-						w="full"
+				<HStack borderTop={"1px"} color="black" className="">
+					<Link
+						to={`/packages/${_id}`}
+						className="p-4 flex items-center justify-between rounded-sm cursor-pointer w-full"
 					>
-						<Text fontSize={"md"} fontWeight={"semibold"}>
-							View more
+						<Text
+							fontSize={"md"}
+							fontWeight={"semibold"}
+							className=""
+						>
+							View details
 						</Text>
 						<BsArrowUpRight />
-					</Flex>
+					</Link>
 					<Flex
 						p={4}
 						alignItems="center"
@@ -135,7 +154,7 @@ const Package = () => {
 						roundedBottom={"sm"}
 						borderLeft={"1px"}
 						cursor="pointer"
-						onClick={() => setLiked(!liked)}
+						onClick={handleAddToWishlist}
 					>
 						{liked ? (
 							<BsHeartFill fill="red" fontSize={"24px"} />
@@ -146,6 +165,20 @@ const Package = () => {
 				</HStack>
 			</Box>
 		</Center>
+		// <div className="relative cursor-pointer">
+		// 	<span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-indigo-500 rounded-lg"></span>
+		// 	<div className="relative p-6 bg-white border-1 border-indigo-500 rounded-lg hover:scale-105 transition duration-500">
+		// 		<div className="flex items-center">
+		// 			<span>😎</span>
+		// 			<h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
+		// 				Cool Feature
+		// 			</h3>
+		// 		</div>
+		// 		<p className="text-gray-600">
+		// 			This is the short description of your feature.
+		// 		</p>
+		// 	</div>
+		// </div>
 	);
 };
 

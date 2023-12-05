@@ -9,15 +9,27 @@ import AllStories from "../pages/AllStories/AllStories";
 import AllPackages from "../pages/AllPackages/AllPackages";
 import Error from "../pages/Error/Error";
 import Blog from "../pages/Blog/Blog";
-import DashBoard from "../layouts/Dashboard";
-import Profile from "../pages/DashBoard/Profile/Profile";
+import DashboardLayout from "../layouts/DashboardLayout.jsx";
+import Tables from "../pages/Tables.tsx";
+import Settings from "../pages/Settings.tsx";
+import MyProfile from "../pages/DashBoard/MyProfile/MyProfile.tsx";
+import AddPackage from "../pages/DashBoard/AddPackage/AddPackage.jsx";
+import ManageUsers from "../pages/DashBoard/ManageUsers/ManageUsers.jsx";
+import AssignedTours from "../pages/DashBoard/AssignedTours/AssignedTours.jsx";
+import Bookings from "../pages/DashBoard/Bookings/Bookings.jsx";
+import Wishlist from "../pages/DashBoard/Wishlist/Wishlist.jsx";
+import Dashboard from "../pages/DashBoard/Dashboard.jsx";
+import PrivateRoute from "./PrivateRoute.jsx";
+import AdminRoute from "./AdminRoute.jsx";
+import GuideRoute from "./GuideRoute.jsx";
+import PackageDetails from "../pages/AllPackages/Package/PackageDetails.jsx";
 
 
 export const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <MainLayout />,
-		errorElement: <Error/>,
+		errorElement: <Error />,
 		children: [
 			{
 				path: "/",
@@ -44,28 +56,74 @@ export const router = createBrowserRouter([
 				element: <AllPackages />,
 			},
 			{
+				path: "/packages/:id",
+				element: <PackageDetails />,
+				loader: ({ params }) =>
+					fetch(`http://localhost:3000/api/packages/${params.id}`),
+			},
+			{
 				path: "/stories",
 				element: <AllStories />,
 			},
 		],
 	},
 	{
-		path: '/dashboard',
-		element: <DashBoard />,
+		path: "dashboard/*",
+		element: (
+			<PrivateRoute>
+				<DashboardLayout />
+			</PrivateRoute>
+		),
 		children: [
 			{
+				path: "",
+				element: <Dashboard />,
+			},
+			{
 				path: "profile",
-				element: <Profile/>
+				element: <MyProfile />,
 			},
 			{
 				path: "bookings",
-				element: <DashBoard/>
+				element: <Bookings />,
 			},
 			{
 				path: "wishlist",
-				element: <DashBoard/>
+				element: <Wishlist />,
 			},
-		]
+			{
+				path: "assigned-tours",
+				element: (
+					<GuideRoute>
+						<AssignedTours />
+					</GuideRoute>
+				),
+			},
+			{
+				path: "addpackage",
+				element: (
+					<AdminRoute>
+						<AddPackage />
+					</AdminRoute>
+				),
+			},
+			{
+				path: "manage-users",
+				element: (
+					<AdminRoute>
+						<ManageUsers />
+					</AdminRoute>
+				),
+			},
+			{
+				path: "tables",
+				element: <Tables />,
+			},
+			{
+				path: "settings",
+				element: <Settings />,
+			},
+		],
 	},
 	{
 		path: "/signup",

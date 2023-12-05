@@ -15,7 +15,6 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  useColorMode,
   Center,
   Popover,
   PopoverTrigger,
@@ -29,16 +28,14 @@ import {
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-  MoonIcon,
-  SunIcon,
 } from '@chakra-ui/icons';
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
 import { NavLink } from 'react-router-dom';
+import ToggleColorMode from '../../components/ToggleColorMode';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure()
-  const { colorMode, toggleColorMode } = useColorMode();
   const { user, logOut } = useAuth();
 
   const handleLogOut = () => {
@@ -95,7 +92,7 @@ export default function WithSubnavigation() {
             fontSize='24px'
             fontWeight={'16px'}
             color={useColorModeValue('pink.600', 'pink.500')}>
-            Logo
+            Tour Guide
           </Text>
         </Flex>
         <Flex
@@ -112,13 +109,7 @@ export default function WithSubnavigation() {
           direction={'row'}
           spacing={4}
         >
-          <Button onClick={toggleColorMode}>
-            {colorMode === "light" ? (
-              <MoonIcon />
-            ) : (
-              <SunIcon />
-            )}
-          </Button>
+          <ToggleColorMode/>
           {user ?
             <Menu>
               <MenuButton

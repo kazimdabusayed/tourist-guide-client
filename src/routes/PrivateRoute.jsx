@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Navigate, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-const PrivateRoutes = ({ children }) => {
+const PrivateRoute = ({ children }) => {
    const { user, loading } = useAuth();
 	const location = useLocation();
 
@@ -12,7 +12,7 @@ const PrivateRoutes = ({ children }) => {
 				<div className="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
 					<div className="flex justify-center">
 						<div
-							className="animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+							className="animate-spin inline-block w-12 h-12 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
 							role="status"
 							aria-label="loading"
 						>
@@ -24,16 +24,15 @@ const PrivateRoutes = ({ children }) => {
 		);
 	}
 
-	console.log(user);
 	if (user?.email) {
 		return children;
 	}
 
-	return <Navigate state={{ from: location }} to="/login" replace></Navigate>;
+	return <Navigate state={{ from: location }} to="/signin" replace></Navigate>;
 };
 
-export default PrivateRoutes;
+export default PrivateRoute;
 
-PrivateRoutes.propTypes = {
+PrivateRoute.propTypes = {
 	children: PropTypes.node,
 };
