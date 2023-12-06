@@ -50,11 +50,13 @@ const AuthProvider = ({ children }) => {
 				axiosOpen.post("/jwt", userInfo).then((res) => {
 					if (res.data.token) {
 						localStorage.setItem("access_token", res.data.token);
+						setLoading(false);
 					}
 				});
 			} else {
 				//remove token
 				localStorage.removeItem("access_token");
+				setLoading(false);
 			}
 			console.log("current user", currentUser);
 			setLoading(false);

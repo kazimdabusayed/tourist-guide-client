@@ -74,7 +74,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
          {/* <!-- SIDEBAR HEADER --> */}
          <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
             <NavLink to="/dashboard">
-               <img src={Logo} alt="Logo" />
+               {/* <img src={Logo} alt="Logo" /> */}
+               <h3 className='text-2xl md:text-3xl font-semibold sm:font-bold  text-cyan-500'>Tourist Trail</h3>
             </NavLink>
 
             <button
@@ -191,21 +192,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                      {
                         !isAdmin &&
                         <>
-                           {/* <!-- Menu Item bookings --> */}
-                           <li>
-                              <NavLink
-                                 to="/dashboard/bookings"
-                                 className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('dashboard/bookings') && 'bg-graydark dark:bg-meta-4'
-                                    }`}
-                              >
-                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                                 </svg>
-                                 My Bookings
-                              </NavLink>
-                           </li>
-                           {/* <!-- Menu Item bookings --> */}
-
                            {/* <!-- Menu Item wishlist --> */}
                            <li>
                               <NavLink
@@ -220,6 +206,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               </NavLink>
                            </li>
                            {/* <!-- Menu Item wishlist --> */}
+
+                           {/* <!-- Menu Item bookings --> */}
+                           <li>
+                              <NavLink
+                                 to="/dashboard/bookings"
+                                 className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('dashboard/bookings') && 'bg-graydark dark:bg-meta-4'
+                                    }`}
+                              >
+                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                                 </svg>
+                                 My Bookings
+                              </NavLink>
+                           </li>
+                           {/* <!-- Menu Item bookings --> */}
                         </>
                      }
 
@@ -279,7 +280,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                      }
 
                      {/* <!-- Menu Item Tables --> */}
-                     <li>
+                     {/* <li>
                         <NavLink
                            to="/dashboard/tables"
                            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('tables') && 'bg-graydark dark:bg-meta-4'
@@ -312,11 +313,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                            </svg>
                            Tables
                         </NavLink>
-                     </li>
+                     </li> */}
                      {/* <!-- Menu Item Tables --> */}
 
                      {/* <!-- Menu Item Settings --> */}
-                     <li>
+                     {/* <li>
                         <NavLink
                            to="/dashboard/settings"
                            className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes('settings') &&
@@ -354,7 +355,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                            </svg>
                            Settings
                         </NavLink>
-                     </li>
+                     </li> */}
                      {/* <!-- Menu Item Settings --> */}
                   </ul>
                </div>

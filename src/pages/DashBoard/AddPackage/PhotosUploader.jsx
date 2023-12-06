@@ -1,14 +1,19 @@
 import axios from "axios";
 import { useState } from "react";
 import Image from "./Image.jsx";
+import useAxiosSecure from "../../../hooks/useAxiosSecure.jsx";
+
+
 
 export default function PhotosUploader({ addedPhotos, onChange }) {
+
+	const axiosSecure = useAxiosSecure();
 	const [photoLink, setPhotoLink] = useState("");
 
 	async function addPhotoByLink(ev) {
 		ev.preventDefault();
-		const { data: filename } = await axios.post(
-			"http://localhost:3000/api/upload-by-link",
+		const { data: filename } = await axiosSecure.post(
+			"/upload-by-link",
 			{
 				link: photoLink,
 			}
@@ -25,8 +30,8 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
 		for (let i = 0; i < files.length; i++) {
 			data.append("photos", files[i]);
 		}
-		axios
-			.post("http://localhost:3000/api/upload", data, {
+		axiosSecure
+			.post("/upload", data, {
 				headers: { "Content-type": "multipart/form-data" },
 			})
 			.then((response) => {

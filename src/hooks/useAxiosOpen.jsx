@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosOpen = axios.create({
-	baseURL: "http://localhost:3000/api",
+	baseURL: "https://tourist-guide-server-1.vercel.app/api",
 });
 
 const useAxiosOpen = () => {

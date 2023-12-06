@@ -85,14 +85,13 @@ export default function WithSubnavigation() {
             aria-label={'Toggle Navigation'}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', lg: 'start' }}>
+        <Flex flex={{ base: 2, md: 1 }} justify={{ base: 'center', lg: 'start' }}>
           <Text
             textAlign={useBreakpointValue({ base: 'center', lg: 'left' })}
             fontFamily={'heading'}
-            fontSize='24px'
-            fontWeight={'16px'}
-            color={useColorModeValue('pink.600', 'pink.500')}>
-            Tour Guide
+            className='text-2xl md:text-3xl font-semibold sm:font-bold '
+            color={useColorModeValue('cyan.500', 'cyan.500')}>
+            Tourist Trail
           </Text>
         </Flex>
         <Flex
@@ -109,7 +108,9 @@ export default function WithSubnavigation() {
           direction={'row'}
           spacing={4}
         >
-          <ToggleColorMode/>
+          <div className='hidden xsm:inline'>
+            <ToggleColorMode />
+          </div>
           {user ?
             <Menu>
               <MenuButton

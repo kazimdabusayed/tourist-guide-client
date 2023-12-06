@@ -6,12 +6,15 @@ import { InputRightElement, Button, InputGroup, useToast } from "@chakra-ui/reac
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
+import useAxiosOpen from "../../hooks/useAxiosOpen";
+
 
 const Register = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const { user, createUser, logOut } = useAuth();
 	const toast = useToast();
 	const navigate = useNavigate();
+	const axiosOpen = useAxiosOpen();
 
 	if (user) {
 		navigate("/");
@@ -36,8 +39,8 @@ const Register = () => {
 					displayName: name,
 					photoURL: photo,
 				});
-				axios
-					.post("http://localhost:3000/api/users", {
+				axiosOpen
+					.post("/users", {
 						name,
 						email,
 						photo,

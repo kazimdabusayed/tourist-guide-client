@@ -10,6 +10,7 @@ import {
 	Center,
 	useColorModeValue,
 	HStack,
+	Tooltip,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
@@ -32,6 +33,8 @@ const Package = ({ onePackage }) => {
 	const [wishlist, refetch] = useWishlist();
 
 	// console.log(wishlist);
+
+	
 
 	const handleAddToWishlist = () => {
 		if (user?.email) {
@@ -60,8 +63,7 @@ const Package = ({ onePackage }) => {
 			});
 		} else {
 			Swal.fire({
-				title: "You are not logged in!",
-				text: "You won't be able to revert this!",
+				title: "You are not signed in!",
 				icon: "warning",
 				showCancelButton: true,
 				confirmButtonColor: "#3085d6",
@@ -76,11 +78,10 @@ const Package = ({ onePackage }) => {
 	};
 
 	return (
-		<Center py={6} className="">
+		<Center py={1} className="">
 			<Box
-				w="lg"
 				rounded={"lg"}
-				my={5}
+				my={[0, 2, 5]}
 				mx={[0, 5]}
 				overflow={"hidden"}
 				bg="white"
@@ -90,7 +91,7 @@ const Package = ({ onePackage }) => {
 					"2px 2px 0 black",
 					"2px 2px 0 pink"
 				)}
-				className="bg-white dark:bg-gray-800 dark:text-gray-100 transition-all duration-300 hover:scale-104 hover:shadow-md hover:shadow-purple-400"
+				className="max-w-screen-2xsm bg-white dark:bg-gray-700 dark:text-gray-100 transition-all duration-300 hover:scale-104 hover:shadow-md hover:shadow-purple-400"
 			>
 				<Box
 					h={"300px"}
@@ -113,20 +114,36 @@ const Package = ({ onePackage }) => {
 						alt={"Image"}
 					/>
 				</Box>
-				<Box p={4}>
-					<Box
-						bg="black"
-						display={"inline-block"}
-						px={2}
-						py={1}
-						color="white"
-						mb={2}
-					>
-						<Text fontSize={"xs"} fontWeight="medium">
-							{tour_type}
-						</Text>
-					</Box>
-					<Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
+				<Box p={2}>
+					<div className="flex justify-between">
+						<Box
+							bg="cyan.900"
+							display={"inline-block"}
+							px={2}
+							py={1}
+							color="white"
+							mb={2}
+							borderRadius="md"
+						>
+							<Text fontSize={"sm"} fontWeight="medium">
+								{tour_type}
+							</Text>
+						</Box>
+						<Box
+							bg="cyan.900"
+							display={"inline-block"}
+							px={2}
+							py={1}
+							color="white"
+							mb={2}
+							borderRadius="md"
+						>
+							<Text fontSize={"sm"} fontWeight="medium">
+								{price} tk
+							</Text>
+						</Box>
+					</div>
+					<Heading color={"black"} fontSize={"xl"} noOfLines={2}>
 						{name}
 					</Heading>
 					<Text color={"gray.500"} noOfLines={2}>
@@ -159,26 +176,16 @@ const Package = ({ onePackage }) => {
 						{liked ? (
 							<BsHeartFill fill="red" fontSize={"24px"} />
 						) : (
-							<BsHeart fontSize={"24px"} />
+							<Tooltip label="Add to wishlist" placement="top">
+								<span>
+									<BsHeart fontSize={"24px"} />
+								</span>
+							</Tooltip>
 						)}
 					</Flex>
 				</HStack>
 			</Box>
 		</Center>
-		// <div className="relative cursor-pointer">
-		// 	<span className="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-indigo-500 rounded-lg"></span>
-		// 	<div className="relative p-6 bg-white border-1 border-indigo-500 rounded-lg hover:scale-105 transition duration-500">
-		// 		<div className="flex items-center">
-		// 			<span>😎</span>
-		// 			<h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-		// 				Cool Feature
-		// 			</h3>
-		// 		</div>
-		// 		<p className="text-gray-600">
-		// 			This is the short description of your feature.
-		// 		</p>
-		// 	</div>
-		// </div>
 	);
 };
 

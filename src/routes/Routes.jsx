@@ -1,28 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../layouts/MainLayout";
-import Login from "../pages/Login/Login";
-import Register from "../pages/Register/Register";
-import Home from "../pages/Home/Home/Home";
-import ContactUs from "../pages/ContactUs/ContactUs";
-import Story from "../pages/Home/Story/Story";
-import AllStories from "../pages/AllStories/AllStories";
-import AllPackages from "../pages/AllPackages/AllPackages";
-import Error from "../pages/Error/Error";
-import Blog from "../pages/Blog/Blog";
 import DashboardLayout from "../layouts/DashboardLayout.jsx";
-import Tables from "../pages/Tables.tsx";
-import Settings from "../pages/Settings.tsx";
-import MyProfile from "../pages/DashBoard/MyProfile/MyProfile.tsx";
+import MainLayout from "../layouts/MainLayout";
+import AllPackages from "../pages/AllPackages/AllPackages";
+import PackageDetails from "../pages/AllPackages/Package/PackageDetails.jsx";
+import AllStories from "../pages/AllStories/AllStories";
+import Blog from "../pages/Blog/Blog";
+import ContactUs from "../pages/ContactUs/ContactUs";
 import AddPackage from "../pages/DashBoard/AddPackage/AddPackage.jsx";
-import ManageUsers from "../pages/DashBoard/ManageUsers/ManageUsers.jsx";
 import AssignedTours from "../pages/DashBoard/AssignedTours/AssignedTours.jsx";
 import Bookings from "../pages/DashBoard/Bookings/Bookings.jsx";
-import Wishlist from "../pages/DashBoard/Wishlist/Wishlist.jsx";
 import Dashboard from "../pages/DashBoard/Dashboard.jsx";
-import PrivateRoute from "./PrivateRoute.jsx";
+import ManageUsers from "../pages/DashBoard/ManageUsers/ManageUsers.jsx";
+import MyProfile from "../pages/DashBoard/MyProfile/MyProfile.tsx";
+import Wishlist from "../pages/DashBoard/Wishlist/Wishlist.jsx";
+import Error from "../pages/Error/Error";
+import Home from "../pages/Home/Home/Home";
+import Story from "../pages/Home/Story/Story";
+import Login from "../pages/Login/Login";
+import Register from "../pages/Register/Register";
+import Settings from "../pages/Settings.tsx";
+import Tables from "../pages/Tables.tsx";
 import AdminRoute from "./AdminRoute.jsx";
 import GuideRoute from "./GuideRoute.jsx";
-import PackageDetails from "../pages/AllPackages/Package/PackageDetails.jsx";
+import PrivateRoute from "./PrivateRoute.jsx";
 
 
 export const router = createBrowserRouter([
@@ -57,12 +57,20 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/packages/:id",
-				element: <PackageDetails />,
+				element: (
+					<PrivateRoute>
+						<PackageDetails />
+					</PrivateRoute>
+				),
 				loader: ({ params }) =>
-					fetch(`http://localhost:3000/api/packages/${params.id}`),
+					fetch(`https://tourist-guide-server-1.vercel.app/api/packages/${params.id}`),
 			},
 			{
 				path: "/stories",
+				element: <AllStories />,
+			},
+			{
+				path: "/stories/:id",
 				element: <AllStories />,
 			},
 		],

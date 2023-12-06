@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
+import { useEffect } from "react";
 
 const Login = () => {
 	const { user, logIn } = useAuth();
@@ -19,9 +20,11 @@ const Login = () => {
 	const navigate = useNavigate();
 	const toast = useToast();
 
-	if (user) {
-		navigate('/');
-	}
+	useEffect(() => {
+		if (user) {
+			navigate("/");
+		}
+	}, [user]);
 
 	const handleSignIn = (e) => {
 		e.preventDefault();
@@ -45,8 +48,6 @@ const Login = () => {
 			});
 	};
 
-	
-
 	return (
 		<div className="min-h-screen">
 			<div className="flex py-6 rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-5xl">
@@ -54,14 +55,14 @@ const Login = () => {
 				<div className="w-full p-6 lg:w-1/2">
 					<a
 						href="/"
-						className="flex justify-center text-3xl font-semibold text-violet-500 text-center mb-4"
+						className="flex justify-center text-3xl font-semibold text-cyan-500 text-center mb-4"
 					>
-						DesignHive
+						Tourist Trail
 					</a>
 					<p className="text-xl text-gray-600 dark:text-gray-400 text-center">
 						Welcome back!
 					</p>
-					<SocialLogin/>
+					<SocialLogin />
 					<div className="mt-4 flex items-center justify-between">
 						<span className="border-b w-1/5 lg:w-1/4"></span>
 						<p className="text-xs text-center text-gray-500">

@@ -20,7 +20,6 @@ const AddPackage = () => {
 		newFields[index] = value;
 		setInputFields(newFields);
 	};
-	console.log(inputFields);
 
 	// const [image, setImage] = useState();
 	// console.log(image);
